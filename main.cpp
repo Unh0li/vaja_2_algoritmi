@@ -23,6 +23,13 @@ void countingSortOnBit(std::vector<unsigned char>& A, int k) {
     std::swap(A, B);
 }
 
+void binaryRadixSort(std::vector<unsigned char>& A) {
+    // postopek ponovimo 8krat
+    for (int k = 0; k < 8; k++) {
+        countingSortOnBit(A, k);
+    }
+}
+
 int main(int argc, char* argv[]) {
     // Preverimo, če je uporabnik podal argument za vhodno datoteko
     if (argc < 2) {
@@ -43,6 +50,8 @@ int main(int argc, char* argv[]) {
         A.push_back(static_cast<unsigned char>(num));
     }
     inFile.close();
+
+    binaryRadixSort(A);
 
     std::ofstream outFile("out.txt");
     if (!outFile) {
