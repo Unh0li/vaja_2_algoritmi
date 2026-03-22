@@ -10,6 +10,17 @@ void countingSortOnBit(std::vector<unsigned char>& A, int k) {
     for (size_t i = 0; i < A.size(); i++) {
         C[(A[i] >> k) & 1]++;
     }
+
+    // prefix sum
+    C[1] += C[0];
+
+    // razporeditev v polje b
+    for (int i = A.size() - 1; i >= 0; i--) {
+        B[--C[(A[i] >> k) & 1]] = A[i];
+    }
+
+    // zamenjamo polje
+    std::swap(A, B);
 }
 
 int main(int argc, char* argv[]) {
