@@ -2,30 +2,26 @@
 #include <fstream>
 #include <vector>
 
-int main(int argc, char* argv[]) {
-    // preverimo argument za vhodno datoteko
-    if (argc < 2) {
-        std::cerr << "Uporaba: " << argv[0] << " <vhodna datoteka>\n";
-        return 1;
+void countingSortOnBit(std::vector<unsigned char>& A, int k) {
+    std::vector<unsigned char> B(A.size());
+    int C[2] = {0, 0};
+
+    // prestejemo frekvence bitov
+    for (size_t i = 0; i < A.size(); i++) {
+        C[(A[i] >> k) & 1]++;
     }
 
-    std::ifstream inFile(argv[1]);
-    if (!inFile) {
-        std::cerr << "Napaka pri odpiranju vhodne datoteke!\n";
-        return 1;
+    // prefix sum
+    C[1] += C[0];
+
+    // razporeditev v polje b
+    for (int i = A.size() - 1; i >= 0; i--) {
+        B[--C[(A[i] >> k) & 1]] = A[i];
     }
 
-    std::vector<unsigned char> A;
-    int num;
-    // beremo kot int in pretvorimo v char
-    while (inFile >> num) {
-        A.push_back(static_cast<unsigned char>(num));
-    }
-    inFile.close();
-
-    #include <iostream>
-#include <fstream>
-#include <vector>
+    // zamenjamo polje
+    std::swap(A, B);
+}
 
 int main(int argc, char* argv[]) {
     // Preverimo, če je uporabnik podal argument za vhodno datoteko
@@ -63,5 +59,3 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 
-    return 0;
-}
