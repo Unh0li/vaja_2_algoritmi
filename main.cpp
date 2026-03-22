@@ -1,18 +1,67 @@
 #include <iostream>
+#include <fstream>
+#include <vector>
 
-// TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-int main()
-{
-    // TIP Press <shortcut actionId="RenameElement"/> when your caret is at the <b>lang</b> variable name to see how CLion can help you rename it.
-    auto lang = "C++";
-    std::cout << "Hello and welcome to " << lang << "!\n";
-
-    for (int i = 1; i <= 5; i++)
-    {
-        // TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-        std::cout << "i = " << i << std::endl;
+int main(int argc, char* argv[]) {
+    // preverimo argument za vhodno datoteko
+    if (argc < 2) {
+        std::cerr << "Uporaba: " << argv[0] << " <vhodna datoteka>\n";
+        return 1;
     }
 
+    std::ifstream inFile(argv[1]);
+    if (!inFile) {
+        std::cerr << "Napaka pri odpiranju vhodne datoteke!\n";
+        return 1;
+    }
+
+    std::vector<unsigned char> A;
+    int num;
+    // beremo kot int in pretvorimo v char
+    while (inFile >> num) {
+        A.push_back(static_cast<unsigned char>(num));
+    }
+    inFile.close();
+
+    #include <iostream>
+#include <fstream>
+#include <vector>
+
+int main(int argc, char* argv[]) {
+    // Preverimo, če je uporabnik podal argument za vhodno datoteko
+    if (argc < 2) {
+        std::cerr << "Uporaba: " << argv[0] << " <vhodna datoteka>\n";
+        return 1;
+    }
+
+    std::ifstream inFile(argv[1]);
+    if (!inFile) {
+        std::cerr << "Napaka pri odpiranju vhodne datoteke!\n";
+        return 1;
+    }
+
+    std::vector<unsigned char> A;
+    int num;
+    // Beremo kot int in pretvorimo v unsigned char (da ne prebere ASCII znakov)
+    while (inFile >> num) {
+        A.push_back(static_cast<unsigned char>(num));
+    }
+    inFile.close();
+
+    std::ofstream outFile("out.txt");
+    if (!outFile) {
+        std::cerr << "Napaka pri ustvarjanju izhodne datoteke!\n";
+        return 1;
+    }
+
+    // izpis stevil s presledkom
+    for (unsigned char x : A) {
+        outFile << static_cast<int>(x) << " ";
+    }
+    outFile.close();
+
     return 0;
-    // TIP See CLion help at <a href="https://www.jetbrains.com/help/clion/">jetbrains.com/help/clion/</a>. Also, you can try interactive lessons for CLion by selecting 'Help | Learn IDE Features' from the main menu.
+}
+
+    return 0;
 }
