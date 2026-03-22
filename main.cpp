@@ -51,6 +51,8 @@ int main(int argc, char* argv[]) {
     }
     inFile.close();
 
+    binaryRadixSort(A);
+
     std::ofstream outFile("out.txt");
     if (!outFile) {
         std::cerr << "Napaka pri ustvarjanju izhodne datoteke!\n";
